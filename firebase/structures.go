@@ -8,7 +8,7 @@ import (
 	"firebase.google.com/go/messaging"
 )
 
-type FirebaseClient interface {
+type Client interface {
 	GetFirestoreClient() *firestore.Client
 	GetAuthClient() *auth.Client
 	GetMessagingClient() *messaging.Client

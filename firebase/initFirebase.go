@@ -11,7 +11,7 @@ import (
 	"google.golang.org/api/option"
 )
 
-func NewFirebaseClient(firestore, auth, messaging bool) FirebaseClient {
+func NewFirebaseClient(firestore, auth, messaging bool) Client {
 	fc := firebaseClient{
 		firestore: firestore,
 		auth:      auth,
