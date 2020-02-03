@@ -8,15 +8,21 @@ import (
 	"firebase.google.com/go/messaging"
 )
 
+//Client - The client interface with all implemented requests and subs ~WIP
 type Client interface {
+	//GetFirestoreClient - return the firestore client
 	GetFirestoreClient() *firestore.Client
+	//GetAuthClient - return the auth client
 	GetAuthClient() *auth.Client
+	//GetMessagingClient - return the messaging client
 	GetMessagingClient() *messaging.Client
+	//FirestoreGet - get a document from collection and ID
 	FirestoreGet(
 		ctx context.Context,
 		collection string,
 		docID string,
 	) (map[string]interface{}, error)
+	//FirestoreSet - Set a document given collection and ID
 	FirestoreSet(
 		ctx context.Context,
 		collection,
@@ -24,22 +30,25 @@ type Client interface {
 		data map[string]interface{},
 		merge bool,
 	) error
+	//SendMessageTopic - Send message on topic
 	SendMessageTopic(
 		ctx context.Context,
 		topic string,
 		data map[string]string,
 	) error
+	//VerifyToken - verify auth token
 	VerifyToken(
 		ctx context.Context,
 		token string,
 	) (string, error)
+	//ListenQueryAsync - listen for query updates
 	ListenQueryAsync(
 		ctx context.Context,
 		collection string,
 		path string,
 		operation string,
 		value interface{},
-		Listener FirebaseQueryUpdate,
+		Listener QueryListener,
 	) error
 }
 
@@ -52,8 +61,10 @@ type firebaseClient struct {
 	messagingClient *messaging.Client
 }
 
-type FirebaseQueryListener func(update *FirebaseQueryUpdate, err error)
+//QueryListener - listen for query updates rends a response or an error
+type QueryListener func(update *QueryUpdate, err error)
 
-type FirebaseQueryUpdate struct {
+//QueryUpdate -
+type QueryUpdate struct {
 	Update *firestore.QuerySnapshot
 }

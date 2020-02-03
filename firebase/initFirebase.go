@@ -11,6 +11,7 @@ import (
 	"google.golang.org/api/option"
 )
 
+//NewFirebaseClient - return a new firebase client, call Connect after creation
 func NewFirebaseClient(firestore, auth, messaging bool) Client {
 	fc := firebaseClient{
 		firestore: firestore,

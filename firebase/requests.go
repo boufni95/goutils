@@ -55,7 +55,7 @@ func (f *firebaseClient) VerifyToken(ctx context.Context, token string) (string,
 	}
 	uid, ok := tokenAuth.Claims["user_id"].(string)
 	if !ok {
-		return "", &NoUidFoundErr{}
+		return "", &NoUIDFoundErr{}
 	}
 	return uid, nil
 }

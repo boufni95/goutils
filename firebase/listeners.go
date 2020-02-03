@@ -1,24 +1,30 @@
-package firestore
+package firebase
 
 import (
+	"context"
+
+	"cloud.google.com/go/firestore"
 	"google.golang.org/api/iterator"
 )
 
-func (f *firestoreClient) ListenQueryAsync(ctx context.Context, collection, path, operation string, value interface{}, Listener FirebaseQueryUpdate) error {
+func (f *firebaseClient) ListenQueryAsync(ctx context.Context, collection, path, operation string, value interface{}, Listener QueryListener) error {
 	query := f.firestoreClient.Collection(collection)
 
 	iter := query.Where(path, operation, value).Snapshots(ctx)
-	go func(iter *firestore.QuerySnapshotIterator, Listener FirebaseQueryUpdate) {
+	go func(iter *firestore.QuerySnapshotIterator, Listener QueryListener) {
 		for {
-			q, err := iterator.Next()
+			q, err := iter.Next()
 			if err == iterator.Done {
 				break
 			}
 			if err != nil {
 				Listener(nil, err)
 			}
-			Listener(q, nil)
+			up := QueryUpdate{
+				Update: q,
+			}
+			Listener(&up, nil)
 		}
-	}(q, Listener)
+	}(iter, Listener)
 	return nil
 }
