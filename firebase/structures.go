@@ -10,6 +10,11 @@ import (
 
 //Client - The client interface with all implemented requests and subs ~WIP
 type Client interface {
+	//Connect - init all the requires clients
+	Connect(
+		ctx context.Context,
+		jsonAdminPath string,
+	) error
 	//GetFirestoreClient - return the firestore client
 	GetFirestoreClient() *firestore.Client
 	//GetAuthClient - return the auth client
