@@ -76,3 +76,17 @@ func (Lnd *lndClient) GetNodeInfo(ctx context.Context, pubkey string, includeCha
 	}
 	return &in, nil
 }
+
+/*
+func (Lnd *lndClient) ListChannels(ctx context.Context) (*ListChannelsResponse, error) {
+	chans, err := Lnd.client.ListChannels(ctx, &lnrpc.ListChannelsRequest{})
+	if err != nil {
+		return nil, err
+	}
+	li := ListChannelsResponse{
+		Res: chans,
+	}
+	return &li, nil
+}
+
+*/

@@ -54,6 +54,9 @@ type Client interface {
 		capacity int64,
 		Listener OpenChannelListener,
 	) error
+	/*ListChannels(
+		ctx context.Context,
+	) (*ListChannelsResponse, error)*/
 }
 
 type lndClient struct {
@@ -83,6 +86,11 @@ type AddInvoiceResponse struct {
 //GetNodeInfoResponse - Info about remote node
 type GetNodeInfoResponse struct {
 	Res *lnrpc.NodeInfo
+}
+
+//ListChannelsResponse - List open channels
+type ListChannelsResponse struct {
+	Res *lnrpc.ListChannelsResponse
 }
 
 //ChannelGraphListener - Callback to handle channel graph update or error
