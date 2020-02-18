@@ -2,7 +2,6 @@ package firebase
 
 import (
 	"context"
-	"errors"
 
 	"cloud.google.com/go/firestore"
 	"firebase.google.com/go/messaging"
@@ -19,15 +18,38 @@ func (f *firebaseClient) FirestoreGet(ctx context.Context, collection string, do
 	return doc.Data(), nil
 }
 
+func (f *firebaseClient) FirestoreGetType(ctx context.Context, collection string, docID string, dataTo interface{}) error {
+	if !f.firestore {
+		return &UnexpectedUseFirestoreErr{}
+	}
+	doc, err := f.firestoreClient.Collection(collection).Doc(docID).Get(ctx)
+	if err != nil {
+		return err
+	}
+	return doc.DataTo(dataTo)
+}
+
 func (f *firebaseClient) FirestoreSet(ctx context.Context, collection, docID string, data map[string]interface{}, merge bool) error {
 	if !f.firestore {
 		return &UnexpectedUseFirestoreErr{}
 	}
-	err := errors.New("mock")
+	var err error
 	if merge {
 		_, err = f.firestoreClient.Collection(collection).Doc(docID).Set(ctx, data, firestore.MergeAll)
 	} else {
 		_, err = f.firestoreClient.Collection(collection).Doc(docID).Set(ctx, data)
+	}
+	return err
+}
+func (f *firebaseClient) FirestoreSetType(ctx context.Context, collection, docID string, dataTo interface{}, merge bool) error {
+	if !f.firestore {
+		return &UnexpectedUseFirestoreErr{}
+	}
+	var err error
+	if merge {
+		_, err = f.firestoreClient.Collection(collection).Doc(docID).Set(ctx, dataTo, firestore.MergeAll)
+	} else {
+		_, err = f.firestoreClient.Collection(collection).Doc(docID).Set(ctx, dataTo)
 	}
 	return err
 }
