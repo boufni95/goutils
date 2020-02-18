@@ -27,12 +27,27 @@ type Client interface {
 		collection string,
 		docID string,
 	) (map[string]interface{}, error)
+	//FirestoreGetType - get a document from collection and ID into a typed param
+	FirestoreGetType(
+		ctx context.Context,
+		collection string,
+		docID string,
+		dataTo interface{},
+	) error
 	//FirestoreSet - Set a document given collection and ID
 	FirestoreSet(
 		ctx context.Context,
 		collection,
 		docID string,
 		data map[string]interface{},
+		merge bool,
+	) error
+	//FirestoreSet - Set a document given collection and ID
+	FirestoreSetType(
+		ctx context.Context,
+		collection,
+		docID string,
+		dataTo interface{},
 		merge bool,
 	) error
 	//SendMessageTopic - Send message on topic
