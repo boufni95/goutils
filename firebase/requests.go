@@ -7,6 +7,14 @@ import (
 	"firebase.google.com/go/messaging"
 )
 
+func (f *firebaseClient) FirestoreDocExists(ctx context.Context, collection string, docID string) (bool, error) {
+	doc, err := f.firestoreClient.Collection(collection).Doc(docID).Get(ctx)
+	if err != nil {
+		return false, err
+	}
+	return doc.Exists(), nil
+}
+
 func (f *firebaseClient) FirestoreGet(ctx context.Context, collection string, docID string) (map[string]interface{}, error) {
 	if !f.firestore {
 		return nil, &UnexpectedUseFirestoreErr{}
