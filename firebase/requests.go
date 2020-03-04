@@ -55,7 +55,7 @@ func (f *firebaseClient) FirestoreSetType(ctx context.Context, collection, docID
 	}
 	var err error
 	if merge {
-		_, err = f.firestoreClient.Collection(collection).Doc(docID).Set(ctx, dataTo, firestore.MergeAll)
+		_, err = f.firestoreClient.Collection(collection).Doc(docID).Set(ctx, dataTo)
 	} else {
 		_, err = f.firestoreClient.Collection(collection).Doc(docID).Set(ctx, dataTo)
 	}
