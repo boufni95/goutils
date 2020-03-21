@@ -5,6 +5,7 @@ go 1.13
 require (
 	firebase.google.com/go v3.12.0+incompatible // indirect
 	github.com/davecgh/go-spew v1.1.1
+	github.com/fatih/structs v1.1.0 // indirect
 	github.com/golang/protobuf v1.3.3 // indirect
 	github.com/googleapis/gax-go v2.0.2+incompatible // indirect
 	github.com/lightningnetwork/lnd v0.0.2 // indirect

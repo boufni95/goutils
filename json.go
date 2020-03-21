@@ -2,6 +2,9 @@ package goutils
 
 import (
 	"encoding/json"
+	"errors"
+
+	"github.com/fatih/structs"
 )
 
 func JsonBytesToType(b []byte, v interface{}) error {
@@ -38,4 +41,13 @@ func ToJsonBytesIndent(v interface{}) ([]byte, error) {
 func ToJsonStringIndent(v interface{}) (string, error) {
 	b, err := ToJsonBytesIndent(v)
 	return string(b), err
+}
+
+//StructToMap uses the tag structs
+func StructToMap(v interface{}) (map[string]interface{}, error) {
+	is := structs.IsStruct(v)
+	if !is {
+		return nil, errors.New("pass a struct pls")
+	}
+	return structs.Map(v), nil
 }
